@@ -1,16 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useState } from "react";
 
-function AdressInput({ label, type, htmlFor, id, name, placeholder, value}) {
+function AdressInput({ label, type, htmlFor, id, name, placeholder, value, }) {
 
-  const [newValue, setNewValue] = useState("pradzia");
+  const [newValue, setNewValue] = useState(value);
 
-  const changeValue = (e) => {
-   setNewValue(e.target.value)
-   console.log(newValue)
-  };
+  if(newValue === undefined) {
+    setNewValue("")
+  }
+
+   const handleChange = (e) => {
+    setNewValue(e.target.value)
+   }
 
 
+useEffect(()=> {
+  setNewValue(value)
+}, [value])
 
   return (
     <div>
@@ -20,8 +26,9 @@ function AdressInput({ label, type, htmlFor, id, name, placeholder, value}) {
         type={type}
         name={name}
         placeholder={placeholder}
-        value={value}
-        onChange={changeValue}
+        defaultValue={newValue}
+        onChange={handleChange}
+        
       />
     </div>
   );

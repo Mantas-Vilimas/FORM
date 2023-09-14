@@ -13,6 +13,7 @@ function Input({ label, type, htmlFor, id, name, placeholder}) {
         type={type}
         name={name}
         placeholder={placeholder}
+       
       />
     </div>
   );
