@@ -4,12 +4,22 @@ import AutoComplete from "../Autocomplete/Autocomplete";
 import AdressInput from "../AddressInput/AddressInput";
 import { useState, useEffect } from "react";
 
-const Form = () => {
+const Form = ({onChange}) => {
   const [address, setAddress] = useState([]);
   const [street, setStreet] = useState();
   const [city, setCity] = useState();
   const [country, setCountry] = useState();
   const [postalCode, setPostalCode] = useState();
+ 
+  //handlers 
+  const handleForm = (value) => {
+    onChange(value)
+  }
+
+  const newAddress = (value) => {
+    setAddress(value);
+
+  };
 
   const handleSubmitNew = (e) => {
     e.preventDefault();
@@ -17,24 +27,23 @@ const Form = () => {
     const form = e.target;
     const formData = new FormData(form);
     const user = Object.fromEntries(formData.entries());
-    const usersListJSON = localStorage.getItem("usersList");
 
 
     const usersArray = localStorage.getItem("usersList")
       ? JSON.parse(localStorage.getItem("usersList"))
       : [];
 
-    if (usersListJSON) {
+    if (usersArray) {
         usersArray.push(user)
         localStorage.setItem("usersList", JSON.stringify(usersArray))
+        handleForm(user)
     } else {
-        localStorage.setItem("usersList", JSON.stringify(usersArray));
+        localStorage.setItem("usersList", JSON.stringify(usersArray))
+        handleForm(user)
     }
   };
 
-  const newAddress = (value) => {
-    setAddress(value);
-  };
+
 
   useEffect(() => {
     for (const component of address) {

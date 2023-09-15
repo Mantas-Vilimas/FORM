@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import "./styles.css";
 
 const AutoComplete = ({handleAddress}) => {
+
   const autoCompleteRef = useRef();
   const inputRef = useRef();
   const options = {
@@ -12,6 +13,8 @@ const AutoComplete = ({handleAddress}) => {
   const fillAddress = (value) => {
     handleAddress(value)
   }
+
+
   useEffect(() => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       inputRef.current,
@@ -20,14 +23,15 @@ const AutoComplete = ({handleAddress}) => {
     autoCompleteRef.current.addListener("place_changed", async function () {
       const place = await autoCompleteRef.current.getPlace();
       fillAddress(place.address_components)
+      inputRef.value = ""
     });
   }, []);
 
 
   return (
     <div>
-      <label>enter address :</label>
-      <input ref={inputRef} />
+      <label>Searc you adress :</label>
+      <input ref={inputRef} placeholder="type here" />
     </div>
   );
 };
